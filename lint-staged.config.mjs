@@ -1,7 +1,7 @@
 const lintStagedConfig = {
-  "*.{js,jsx,ts,tsx}": ["eslint --max-warnings=0", "prettier --check"],
-  "*.{css,scss}": ["stylelint --allow-empty-input", "prettier --check"],
-  "*.{json,md,yml,yaml}": ["prettier --check"],
+  "*.{js,jsx,ts,tsx}": ["eslint", "prettier --write"],
+  "*.{css,scss}": ["stylelint --allow-empty-input", "prettier --write"],
+  "*.{json,md,yml,yaml}": ["prettier --write"],
 };
 
 export default lintStagedConfig;

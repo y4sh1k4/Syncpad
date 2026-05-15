@@ -1,17 +1,17 @@
 import { Editor } from "./editor";
 import { Toolbar } from "./toolbar";
 
-interface DocumentIdPageProps {
-  params: Promise<{
-    documentId: string;
-  }>;
-}
-const DocumentIdPage = async ({ params }: DocumentIdPageProps) => {
-  const { documentId } = await params;
+// interface DocumentIdPageProps {
+//   params: Promise<{
+//     documentId: string;
+//   }>;
+// }
+const DocumentIdPage = async () => {
+  // const { documentId } = await params;
   return (
     <div>
-      <Toolbar/>
-      <Editor/>
+      <Toolbar />
+      <Editor />
     </div>
   );
 };

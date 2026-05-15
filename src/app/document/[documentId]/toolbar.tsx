@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import { useEditorStore } from "@/store/useEditorStore";
 import { Separator } from "@radix-ui/react-separator";
-import {  useState } from "react";
+import { useState } from "react";
 import { SketchPicker } from "react-color";
 
 import {
@@ -93,7 +93,7 @@ const FontFamilySelector = () => {
         asChild
       >
         <Button className="py-0.5">
-          { activeFont || "Select Font"}{" "}
+          {activeFont || "Select Font"}{" "}
           <ChevronDown
             color="#c2c4c7"
             size={16}
@@ -130,9 +130,10 @@ const HeadingSelector = () => {
     { label: "Heading 5", value: "5", size: "16px" },
     { label: "Normal Text", value: "0", size: "14px" },
   ];
-  const activeHeading = headings.find((heading) =>
-    editor?.isActive("heading", { level: parseInt(heading.value) as Level }),
-  )?.label || "Normal Text";
+  const activeHeading =
+    headings.find((heading) =>
+      editor?.isActive("heading", { level: parseInt(heading.value) as Level }),
+    )?.label || "Normal Text";
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger
@@ -346,7 +347,7 @@ const LinkButton = () => {
 const ImageButton = () => {
   const editor = useEditorStore((state) => state.editor);
   const [openDialog, setOpenDialog] = useState(false);
-  const [imageUrl, setImageUrl] = useState(""); 
+  const [imageUrl, setImageUrl] = useState("");
   const onChange = (src: string) => {
     editor?.chain().focus().setImage({ src }).run();
   };
@@ -362,13 +363,13 @@ const ImageButton = () => {
       }
     };
     input.click();
-  }
+  };
 
   const handleInsertFromUrl = () => {
     onChange(imageUrl);
     setImageUrl("");
     setOpenDialog(false);
-  }
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -376,75 +377,85 @@ const ImageButton = () => {
         asChild
       >
         <button
-        className={cn(
+          className={cn(
             "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80",
             editor?.isActive("link") && "bg-neutral-200/80",
-        )}
+          )}
         >
-        <Image size={16}/>
+          <Image size={16} />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white border border-[#c2c4c7] p-1 rounded-md">
-        <DropdownMenuItem onClick={()=>handleUploadImage()}>Upload Image</DropdownMenuItem>
-        <DropdownMenuItem> <span onClick={() => setOpenDialog(true)}>Insert from URL</span></DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleUploadImage()}>
+          Upload Image
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          {" "}
+          <span onClick={() => setOpenDialog(true)}>Insert from URL</span>
+        </DropdownMenuItem>
       </DropdownMenuContent>
       {openDialog && (
-          <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-            <DialogContent className="bg-[#F1F4F9]">
-              <DialogHeader>
-                <DialogTitle>Insert Image from URL</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium">Image URL</label>
-                  <input
-                    type="text"
-                    placeholder="https://example.com/image.jpg"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1"
-                    onChange={(e) => setImageUrl(e.target.value)}
-                  />
-                </div>
-                <div className="flex justify-end gap-2">
-                  <Button variant="outline" onClick={() => setOpenDialog(false)}>
-                    Cancel
-                  </Button>
-                  <Button onClick={() => handleInsertFromUrl()}>Insert Image</Button>  
-                </div>
+        <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+          <DialogContent className="bg-[#F1F4F9]">
+            <DialogHeader>
+              <DialogTitle>Insert Image from URL</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-medium">Image URL</label>
+                <input
+                  type="text"
+                  placeholder="https://example.com/image.jpg"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1"
+                  onChange={(e) => setImageUrl(e.target.value)}
+                />
               </div>
-            </DialogContent>
-          </Dialog>
-        )}
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setOpenDialog(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={() => handleInsertFromUrl()}>
+                  Insert Image
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </DropdownMenu>
   );
 };
 
 const AlignButton = () => {
   const editor = useEditorStore((state) => state.editor);
-  const AlignIcons = [{
-    label: "Left",
-    icon: TextAlignStart ,
-    value: "left",
-  },
-  {
-    label: "Center",
-    icon: TextAlignCenter ,
-    value: "center",
-  },
-  {
-    label: "Right",
-    icon: TextAlignEnd,
-    value: "right",
-  },
-  {
-    label: "Justify",
-    icon: TextAlignJustify ,
-    value: "justify",
-  },]
+  const AlignIcons = [
+    {
+      label: "Left",
+      icon: TextAlignStart,
+      value: "left",
+    },
+    {
+      label: "Center",
+      icon: TextAlignCenter,
+      value: "center",
+    },
+    {
+      label: "Right",
+      icon: TextAlignEnd,
+      value: "right",
+    },
+    {
+      label: "Justify",
+      icon: TextAlignJustify,
+      value: "justify",
+    },
+  ];
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const ActiveAlignment = AlignIcons.find((align) => editor?.isActive({ textAlign: align.value }),
-  )?.icon || TextAlignCenter as LucideIcon;
+  const ActiveAlignment =
+    AlignIcons.find((align) => editor?.isActive({ textAlign: align.value }))
+      ?.icon || (TextAlignCenter as LucideIcon);
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -465,15 +476,22 @@ const AlignButton = () => {
         {AlignIcons.map((align) => (
           <DropdownMenuItem
             className={
-              editor?.isActive({textAlign: align.value})
+              editor?.isActive({ textAlign: align.value })
                 ? "bg-[#F1F4F9] flex items-center"
                 : "flex items-center"
             }
             key={align.value}
-            onSelect={() => editor?.chain().focus().setTextAlign(align.value as "left" | "center" | "right" | "justify").run()}
-
+            onSelect={() =>
+              editor
+                ?.chain()
+                .focus()
+                .setTextAlign(
+                  align.value as "left" | "center" | "right" | "justify",
+                )
+                .run()
+            }
           >
-            <align.icon size={16} className="mr-2"/>
+            <align.icon size={16} className="mr-2" />
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
@@ -483,21 +501,24 @@ const AlignButton = () => {
 
 const ListButton = () => {
   const editor = useEditorStore((state) => state.editor);
-  const ListIcons = [{
-    label: "toggleBulletList",
-    icon: List ,
-    value: "bullet",
-  },
-  {
-    label: "toggleOrderedList",
-    icon: ListOrdered ,
-    value: "number",
-  }]
+  const ListIcons = [
+    {
+      label: "toggleBulletList",
+      icon: List,
+      value: "bullet",
+    },
+    {
+      label: "toggleOrderedList",
+      icon: ListOrdered,
+      value: "number",
+    },
+  ];
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const ActiveList = ListIcons.find((list) => editor?.isActive({ list: list.value }),
-  )?.icon || List as LucideIcon;
+  const ActiveList =
+    ListIcons.find((list) => editor?.isActive({ list: list.value }))?.icon ||
+    (List as LucideIcon);
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -518,22 +539,24 @@ const ListButton = () => {
         {ListIcons.map((list) => (
           <DropdownMenuItem
             className={
-              editor?.isActive({list: list.value})
+              editor?.isActive({ list: list.value })
                 ? "bg-[#F1F4F9] flex items-center"
                 : "flex items-center"
             }
             key={list.value}
-            onSelect={list.value === "bullet" ? () => editor?.chain().focus().toggleBulletList().run() : () => editor?.chain().focus().toggleOrderedList().run()}
-
+            onSelect={
+              list.value === "bullet"
+                ? () => editor?.chain().focus().toggleBulletList().run()
+                : () => editor?.chain().focus().toggleOrderedList().run()
+            }
           >
-            <list.icon size={16} className="mr-2"/>
+            <list.icon size={16} className="mr-2" />
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
-
 
 export const Toolbar = () => {
   const editor = useEditorStore((state) => state.editor);
@@ -672,7 +695,7 @@ export const Toolbar = () => {
         className="h-7 w-[1px] bg-neutral-900"
       />
       <LinkButton />
-      <ImageButton/>
+      <ImageButton />
       <AlignButton />
       {/* TODO: Line Height */}
       <ListButton />

@@ -6,20 +6,20 @@ import TaskItem from "@tiptap/extension-task-item";
 import Table from "@tiptap/extension-table";
 import ImageResize from "tiptap-extension-resize-image";
 import TableCell from "@tiptap/extension-table-cell";
-import Link from '@tiptap/extension-link'
-import Heading from '@tiptap/extension-heading'
-import ListItem from '@tiptap/extension-list-item'
-import TextAlign from '@tiptap/extension-text-align'
-import Paragraph from '@tiptap/extension-paragraph'
+import Link from "@tiptap/extension-link";
+import Heading from "@tiptap/extension-heading";
+import ListItem from "@tiptap/extension-list-item";
+import TextAlign from "@tiptap/extension-text-align";
+import Paragraph from "@tiptap/extension-paragraph";
 import Underline from "@tiptap/extension-underline";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import Image from "@tiptap/extension-image";
 import FontFamily from "@tiptap/extension-font-family";
-import Highlight from '@tiptap/extension-highlight'
+import Highlight from "@tiptap/extension-highlight";
 import TextStyle from "@tiptap/extension-text-style";
 import { useEditorStore } from "@/store/useEditorStore";
-import { Color } from '@tiptap/extension-color'
+import { Color } from "@tiptap/extension-color";
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
@@ -44,28 +44,33 @@ export const Editor = () => {
     },
     extensions: [
       StarterKit,
-      Heading, 
+      Heading,
       Highlight.configure({ multicolor: true }),
-      Paragraph, 
+      Paragraph,
       TextAlign.configure({
-        types: ['heading', 'paragraph'],
+        types: ["heading", "paragraph"],
       }),
       ListItem,
       Color,
       Link.configure({
         openOnClick: true,
         autolink: true,
-        defaultProtocol: 'https',
-        protocols: ['http', 'https'],
-        shouldAutoLink: url => {
+        defaultProtocol: "https",
+        protocols: ["http", "https"],
+        shouldAutoLink: (url) => {
           try {
-            const parsedUrl = url.includes(':') ? new URL(url) : new URL(`https://${url}`)
-            const disallowedDomains = ['example-no-autolink.com', 'another-no-autolink.com']
-            const domain = parsedUrl.hostname
+            const parsedUrl = url.includes(":")
+              ? new URL(url)
+              : new URL(`https://${url}`);
+            const disallowedDomains = [
+              "example-no-autolink.com",
+              "another-no-autolink.com",
+            ];
+            const domain = parsedUrl.hostname;
 
-            return !disallowedDomains.includes(domain)
+            return !disallowedDomains.includes(domain);
           } catch {
-            return false
+            return false;
           }
         },
       }),

@@ -1,4 +1,5 @@
 import { Editor } from "./editor";
+import { Navbar } from "./navbar";
 import { Toolbar } from "./toolbar";
 
 // interface DocumentIdPageProps {
@@ -10,6 +11,7 @@ const DocumentIdPage = async () => {
   // const { documentId } = await params;
   return (
     <div>
+      <Navbar />
       <Toolbar />
       <Editor />
     </div>

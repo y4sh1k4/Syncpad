@@ -27,7 +27,7 @@ import {
   LucideIcon,
   MessageSquareCodeIcon,
   PrinterIcon,
-  Image,
+  Image as ImageIcon,
   Redo2,
   RemoveFormattingIcon,
   StrikethroughIcon,
@@ -42,6 +42,7 @@ import {
   TextAlignStart,
   List,
   ListOrdered,
+  ListCollapse,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ColorResult } from "react-color";
@@ -63,7 +64,7 @@ const ToolbarButton = ({
       onClick={onClick}
       className={cn(
         "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80",
-        isActive && "bg-neutral-200/80",
+        isActive && "bg-red-600",
       )}
     >
       <Icon size={16} />
@@ -119,6 +120,110 @@ const FontFamilySelector = () => {
   );
 };
 
+const FontSizeSelector = () => {
+  const editor = useEditorStore((state) => state.editor);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const fontSizes = [
+    { label: "12px", value: "12px" },
+    { label: "14px", value: "14px" },
+    { label: "16px", value: "16px" },
+    { label: "18px", value: "18px" },
+    { label: "20px", value: "20px" },
+    { label: "24px", value: "24px" },
+    { label: "32px", value: "32px" },
+    { label: "Reset", value: "" },
+  ];
+
+  const activeFontSize = editor?.getAttributes("textStyle").fontSize || "14px";
+
+  return (
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+      <DropdownMenuTrigger
+        className="bg-[#F1F4F9] h-[30px] rounded-none"
+        asChild
+      >
+        <Button className="py-0.5">
+          {activeFontSize}
+          <ChevronDown
+            color="#c2c4c7"
+            size={16}
+            className={cn("transition-transform", isOpen && "rotate-180")}
+          />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="bg-white border border-[#c2c4c7] p-1 rounded-md">
+        {fontSizes.map((size) => (
+          <DropdownMenuItem
+            key={size.label}
+            className={activeFontSize === size.value ? "bg-[#F1F4F9]" : ""}
+            onSelect={() => {
+              if (size.value) {
+                editor?.chain().focus().setFontSize(size.value).run();
+                return;
+              }
+
+              editor?.chain().focus().unsetFontSize().run();
+            }}
+            style={{ fontSize: size.value || activeFontSize }}
+          >
+            {size.label}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
+const LineHeightSelector = () => {
+  const editor = useEditorStore((state) => state.editor);
+  const [isOpen, setIsOpen] = useState(false);
+  const lineHeights = [
+    { label: "Single", value: "1" },
+    { label: "1.5", value: "1.5" },
+    { label: "Double", value: "2" },
+    { label: "2.5", value: "2.5" },
+    { label: "Triple", value: "3" },
+    { label: "Reset", value: "" },
+  ];
+  const activeLineHeight =
+    editor?.getAttributes("textStyle").lineHeight || "1.5";
+  return (
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+      <DropdownMenuTrigger
+        className="bg-[#F1F4F9] h-[30px] rounded-none"
+        asChild
+      >
+        <button className="text-sm h-7 min-w-9 flex items-center justify-center outline-none rounded-sm hover:bg-neutral-200/80">
+          <ListCollapse size={16} />
+          <ChevronDown
+            color="#c2c4c7"
+            size={16}
+            className={cn("transition-transform", isOpen && "rotate-180")}
+          />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="bg-white border border-[#c2c4c7] p-1 rounded-md">
+        {lineHeights.map((line) => (
+          <DropdownMenuItem
+            key={line.label}
+            className={activeLineHeight === line.value ? "bg-[#F1F4F9]" : ""}
+            onSelect={() => {
+              if (line.value) {
+                editor?.chain().focus().setLineHeight(line.value).run();
+                return;
+              }
+              editor?.chain().focus().unsetLineHeight().run();
+            }}
+          >
+            {line.label}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
 const HeadingSelector = () => {
   const editor = useEditorStore((state) => state.editor);
   const [isOpen, setIsOpen] = useState(false);
@@ -137,7 +242,7 @@ const HeadingSelector = () => {
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger
-        className="bg-[#F1F4F9] h-[30px] rounded-none "
+        className="bg-[#F1F4F9] h-[30px] rounded-none"
         asChild
       >
         <Button className="py-0.5">
@@ -382,7 +487,7 @@ const ImageButton = () => {
             editor?.isActive("link") && "bg-neutral-200/80",
           )}
         >
-          <Image size={16} />
+          <ImageIcon size={16} />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white border border-[#c2c4c7] p-1 rounded-md">
@@ -684,7 +789,7 @@ export const Toolbar = () => {
         orientation="vertical"
         className="h-7 w-[1px] bg-neutral-900"
       />
-      {/* TODO: Font size */}
+      <FontSizeSelector />
       <Separator
         orientation="vertical"
         className="h-7 w-[1px] bg-neutral-900"
@@ -697,7 +802,7 @@ export const Toolbar = () => {
       <LinkButton />
       <ImageButton />
       <AlignButton />
-      {/* TODO: Line Height */}
+      <LineHeightSelector />
       <ListButton />
     </div>
   );

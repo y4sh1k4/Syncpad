@@ -1,4 +1,5 @@
 import { Navbar } from "./navbar";
+import { DocumentTable } from "./Table";
 import { TemplateGallery } from "./template-gallery";
 
 const Home = () => {
@@ -9,6 +10,7 @@ const Home = () => {
       </div>
       <div className="mt-4 w-full">
         <TemplateGallery />
+        <DocumentTable />
       </div>
     </div>
   );

@@ -52,18 +52,27 @@ export type Level = 1 | 2 | 3 | 4 | 5 | 6;
 interface ToolbarButtonProps {
   onClick?: () => void;
   isActive?: boolean;
+  disabled?: boolean;
   icon: LucideIcon;
+  label?: string;
 }
 const ToolbarButton = ({
   onClick,
   isActive,
+  disabled,
   icon: Icon,
+  label,
 }: ToolbarButtonProps) => {
   return (
     <button
+      type="button"
+      aria-label={label}
+      title={label}
       onClick={onClick}
+      disabled={disabled}
       className={cn(
         "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80",
+        disabled && "cursor-not-allowed opacity-50 hover:bg-transparent",
         isActive && "bg-red-600",
       )}
     >
@@ -667,6 +676,7 @@ export const Toolbar = () => {
   const editor = useEditorStore((state) => state.editor);
   const sections: {
     isActive?: boolean;
+    disabled?: boolean;
     icon: LucideIcon;
     label: string;
     onClick: () => void;
@@ -720,7 +730,9 @@ export const Toolbar = () => {
       {
         label: "Comment",
         icon: MessageSquareCodeIcon,
-        onClick: () => console.log("Comment"),
+        onClick: () => editor?.chain().focus().addPendingComment().run(),
+        isActive: editor?.isActive("liveblocksCommentMark") || false,
+        disabled: !editor || editor.state.selection.empty,
       },
       {
         label: "ListTodo",

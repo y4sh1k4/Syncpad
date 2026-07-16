@@ -3,7 +3,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
-import Table from "@tiptap/extension-table";
+import { Table } from "@tiptap/extension-table";
 import ImageResize from "tiptap-extension-resize-image";
 import TableCell from "@tiptap/extension-table-cell";
 import Link from "@tiptap/extension-link";
@@ -16,17 +16,27 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import Image from "@tiptap/extension-image";
 import FontFamily from "@tiptap/extension-font-family";
+import { useLiveblocksExtension } from "@liveblocks/react-tiptap";
 import Highlight from "@tiptap/extension-highlight";
-import TextStyle from "@tiptap/extension-text-style";
+import { TextStyle } from "@tiptap/extension-text-style";
 import { FontSize } from "@/extension/font-size";
 import { LineHeight } from "@/extension/line-height";
 import { useEditorStore } from "@/store/useEditorStore";
 import { Color } from "@tiptap/extension-color";
 import { Ruler } from "./Ruler";
+import { Threads } from "./Threads";
+
+const initialContent = `
+  <p><span style="font-family: cursive">Did you know that Cursive is a really nice font for interfaces?</span></p>
+`;
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
   const leftMargin = useEditorStore((state) => state.leftMargin);
+  const liveblocks = useLiveblocksExtension({
+    initialContent,
+    comments: true,
+  });
   const rightMargin = useEditorStore((state) => state.rightMargin);
   const editor = useEditor({
     onCreate({ editor }) {
@@ -49,6 +59,7 @@ export const Editor = () => {
     },
     extensions: [
       StarterKit,
+      liveblocks,
       Heading,
       Highlight.configure({ multicolor: true }),
       Paragraph,
@@ -99,9 +110,6 @@ export const Editor = () => {
       TableHeader,
       TableCell,
     ],
-    content: `
-        <p><span style="font-family: cursive">Did you know that Cursive is a really nice font for interfaces?</span></p>
-      `,
     editorProps: {
       attributes: {
         style: `padding-left: ${leftMargin}px; padding-right: ${rightMargin}px;`,
@@ -115,6 +123,7 @@ export const Editor = () => {
       <Ruler />
       <div className="min-w-max w-[816px] flex justify-center pb-4 print:py-0 mx-auto print:w-full print:min-w-0">
         <EditorContent editor={editor} />
+        <Threads editor={editor} />
       </div>
     </div>
   );

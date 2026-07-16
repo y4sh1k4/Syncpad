@@ -1,5 +1,11 @@
 import { PenSquare } from "lucide-react";
-import { SignInButton, SignUpButton, UserButton, Show } from "@clerk/nextjs";
+import {
+  SignInButton,
+  SignUpButton,
+  UserButton,
+  OrganizationSwitcher,
+  Show,
+} from "@clerk/nextjs";
 import SearchBar from "./search-bar";
 
 export const Navbar = () => {
@@ -34,6 +40,7 @@ export const Navbar = () => {
             </SignUpButton>
           </Show>
           <Show when="signed-in">
+            <OrganizationSwitcher />
             <UserButton />
           </Show>
         </div>

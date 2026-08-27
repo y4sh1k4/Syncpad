@@ -18,7 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Id } from "../../../convex/_generated/dataModel";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useOrganization, useUser } from "@clerk/nextjs";
 
 type RenameDocument = {
@@ -27,12 +27,14 @@ type RenameDocument = {
 };
 
 export const DocumentTable = () => {
+  const router = useRouter();
   const { user } = useUser();
   const { organization } = useOrganization();
   const documents = useQuery(api.document.listDocuments, {
     userId: organization ? undefined : (user?.id ?? undefined),
     organizationId: organization?.id ?? undefined,
   });
+
   const remove = useMutation(api.document.deleteDocument);
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams.toString());
@@ -41,7 +43,6 @@ export const DocumentTable = () => {
   const [renameDocument, setRenameDocument] = useState<RenameDocument | null>(
     null,
   );
-  console.log("Organization in DocumentTable:", organization);
   const [title, setTitle] = useState("");
   const [isRenaming, setIsRenaming] = useState(false);
 
@@ -103,52 +104,84 @@ export const DocumentTable = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {documents
-              ?.filter((doc) => doc.title.includes(search))
-              .map((doc) => (
-                <tr key={doc._id} className="text-gray-700">
-                  <td className="text-xs px-6 py-4 whitespace-nowrap">
-                    {doc.title}
-                  </td>
-                  <td className="text-xs px-6 py-4 whitespace-nowrap">
-                    {new Date(doc._creationTime).toLocaleDateString()}
-                  </td>
-                  <td></td>
-                  <td className="text-xs px-6 py-4 whitespace-nowrap">
-                    {doc.organizationId ? (
-                      <div className="flex gap-2 items-end text-sm">
-                        <Building2 size={20} /> Organization
-                      </div>
-                    ) : (
-                      <div className="flex gap-2 items-end text-sm">
-                        <CircleUserRound size={20} /> Personal
-                      </div>
-                    )}
-                  </td>
-                  <td>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="text-sm text-gray-700">
-                        <EllipsisVertical size={15} />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="bg-white border border-[#c2c4c7] p-1 rounded-md">
-                        <DropdownMenuItem
-                          onSelect={() =>
-                            openRenameDialog({ _id: doc._id, title: doc.title })
-                          }
-                        >
-                          Rename
-                        </DropdownMenuItem>
-
-                        <DropdownMenuItem
-                          onClick={() => remove({ documentId: doc._id })}
-                        >
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+            {documents === undefined ? (
+              Array.from({ length: 4 }).map((_, index) => (
+                <tr key={`document-skeleton-${index}`}>
+                  <td className="px-6 py-5" colSpan={5}>
+                    <div className="h-4 w-2/3 animate-pulse rounded bg-gray-100" />
                   </td>
                 </tr>
-              ))}
+              ))
+            ) : documents.filter((doc) =>
+                doc.title.toLowerCase().includes(search.toLowerCase()),
+              ).length === 0 ? (
+              <tr>
+                <td
+                  colSpan={5}
+                  className="px-6 py-12 text-center text-sm text-gray-500"
+                >
+                  {search
+                    ? "No documents match your search."
+                    : "No documents yet."}
+                </td>
+              </tr>
+            ) : (
+              documents
+                .filter((doc) =>
+                  doc.title.toLowerCase().includes(search.toLowerCase()),
+                )
+                .map((doc) => (
+                  <tr
+                    key={doc._id}
+                    className="cursor-pointer text-gray-700 hover:bg-gray-50"
+                    onClick={() => router.push(`/document/${doc._id}`)}
+                  >
+                    <td className="text-xs px-6 py-4 whitespace-nowrap">
+                      {doc.title}
+                    </td>
+                    <td className="text-xs px-6 py-4 whitespace-nowrap">
+                      {new Date(doc._creationTime).toLocaleDateString()}
+                    </td>
+                    <td></td>
+                    <td className="text-xs px-6 py-4 whitespace-nowrap">
+                      {doc.organizationId ? (
+                        <div className="flex gap-2 items-end text-sm">
+                          <Building2 size={20} /> Organization
+                        </div>
+                      ) : (
+                        <div className="flex gap-2 items-end text-sm">
+                          <CircleUserRound size={20} /> Personal
+                        </div>
+                      )}
+                    </td>
+                    <td onClick={(event) => event.stopPropagation()}>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger className="text-sm text-gray-700">
+                          <EllipsisVertical size={15} />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="bg-white border border-[#c2c4c7] p-1 rounded-md">
+                          <DropdownMenuItem
+                            onSelect={() =>
+                              openRenameDialog({
+                                _id: doc._id,
+                                title: doc.title,
+                              })
+                            }
+                          >
+                            Rename
+                          </DropdownMenuItem>
+
+                          <DropdownMenuItem
+                            onClick={() => remove({ documentId: doc._id })}
+                          >
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </td>
+                  </tr>
+                ))
+            )}
           </tbody>
         </table>
       </div>

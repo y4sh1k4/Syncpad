@@ -1,7 +1,7 @@
 "use client";
 
-import { useEditorStore } from "@/store/useEditorStore";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useMutation, useStorage } from "@liveblocks/react/suspense";
+import { useCallback, useEffect, useRef } from "react";
 
 const RULER_WIDTH = 816;
 const SUBDIVISIONS = 10;
@@ -28,18 +28,14 @@ const ticks = Array.from(
 export const Ruler = () => {
   const rulerRef = useRef<HTMLDivElement | null>(null);
   const activeDragRef = useRef<"left" | "right" | null>(null);
-  const [leftMargin, setLeftMargin] = useState(56);
-  const [rightMargin, setRightMargin] = useState(56);
-  const setLeftMarginStore = useEditorStore((state) => state.setLeftMargin);
-  const setRightMarginStore = useEditorStore((state) => state.setRightMargin);
-
-  useEffect(() => {
-    setLeftMarginStore?.(leftMargin);
-  }, [leftMargin, setLeftMarginStore]);
-
-  useEffect(() => {
-    setRightMarginStore?.(rightMargin);
-  }, [rightMargin, setRightMarginStore]);
+  const leftMargin = useStorage((root) => root.leftMargin);
+  const rightMargin = useStorage((root) => root.rightMargin);
+  const setLeftMargin = useMutation(({ storage }, margin: number) => {
+    storage.set("leftMargin", margin);
+  }, []);
+  const setRightMargin = useMutation(({ storage }, margin: number) => {
+    storage.set("rightMargin", margin);
+  }, []);
 
   const getRelativeX = (clientX: number) => {
     const rulerElement = rulerRef.current;

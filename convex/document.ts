@@ -20,6 +20,15 @@ export const listDocuments = query({
   },
 });
 
+export const listDocumentsById = query({
+  args: {
+    documentId: v.id("documents"),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.documentId);
+  },
+});
+
 export const createDocument = mutation({
   args: {
     title: v.optional(v.string()),

@@ -732,7 +732,7 @@ export const Toolbar = () => {
         icon: MessageSquareCodeIcon,
         onClick: () => editor?.chain().focus().addPendingComment().run(),
         isActive: editor?.isActive("liveblocksCommentMark") || false,
-        disabled: !editor || editor.state.selection.empty,
+        disabled: !editor,
       },
       {
         label: "ListTodo",

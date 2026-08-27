@@ -10,9 +10,10 @@ import { cn } from "@/lib/utils";
 import { api } from "../../../convex/_generated/api";
 import { useMutation } from "convex/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export const TemplateGallery = () => {
-  const isCreating = false;
+  const [isCreating, setIsCreating] = useState(false);
   const templates = [
     {
       id: 1,
@@ -58,8 +59,13 @@ export const TemplateGallery = () => {
     title: string,
     initialContent: string,
   ) => {
-    const documentId = await create({ title, initialContent });
-    router.push(`/document/${documentId}`);
+    setIsCreating(true);
+    try {
+      const documentId = await create({ title, initialContent });
+      router.push(`/document/${documentId}`);
+    } finally {
+      setIsCreating(false);
+    }
   };
   return (
     <div className="bg-neutral-200 flex items-center justify-center">

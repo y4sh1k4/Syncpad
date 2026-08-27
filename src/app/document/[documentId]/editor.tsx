@@ -16,7 +16,11 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import Image from "@tiptap/extension-image";
 import FontFamily from "@tiptap/extension-font-family";
-import { useLiveblocksExtension } from "@liveblocks/react-tiptap";
+import {
+  useLiveblocksExtension,
+  FloatingComposer,
+} from "@liveblocks/react-tiptap";
+import { useStorage } from "@liveblocks/react/suspense";
 import Highlight from "@tiptap/extension-highlight";
 import { TextStyle } from "@tiptap/extension-text-style";
 import { FontSize } from "@/extension/font-size";
@@ -32,12 +36,12 @@ const initialContent = `
 
 export const Editor = () => {
   const setEditor = useEditorStore((state) => state.setEditor);
-  const leftMargin = useEditorStore((state) => state.leftMargin);
+  const leftMargin = useStorage((root) => root.leftMargin);
   const liveblocks = useLiveblocksExtension({
     initialContent,
     comments: true,
   });
-  const rightMargin = useEditorStore((state) => state.rightMargin);
+  const rightMargin = useStorage((root) => root.rightMargin);
   const editor = useEditor({
     onCreate({ editor }) {
       setEditor(editor);
@@ -124,6 +128,7 @@ export const Editor = () => {
       <div className="min-w-max w-[816px] flex justify-center pb-4 print:py-0 mx-auto print:w-full print:min-w-0">
         <EditorContent editor={editor} />
         <Threads editor={editor} />
+        <FloatingComposer editor={editor} style={{ width: "350px" }} />
       </div>
     </div>
   );

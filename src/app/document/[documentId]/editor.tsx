@@ -118,17 +118,23 @@ export const Editor = () => {
       attributes: {
         style: `padding-left: ${leftMargin}px; padding-right: ${rightMargin}px;`,
         class:
-          "focus:outline-none print:border-0 bg-white border border-[#C7C7C7] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
+          "focus:outline-none print:border-0 bg-[#FFFEFC] border border-[#DCDAD1] shadow-[0_2px_8px_rgba(42,42,34,0.08)] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text",
       },
     },
   });
   return (
-    <div className="size-full overflow-x-auto bg-[#F9FBFD] px-4 print:bg-white print:overflow-visible print:p-0">
-      <Ruler />
+    <div className="size-full overflow-x-auto bg-[#F5F5F0] px-4 print:bg-white print:overflow-visible print:p-0">
+      <div className="print:hidden">
+        <Ruler />
+      </div>
       <div className="min-w-max w-[816px] flex justify-center pb-4 print:py-0 mx-auto print:w-full print:min-w-0">
-        <EditorContent editor={editor} />
+        <EditorContent editor={editor} className="print-canvas" />
         <Threads editor={editor} />
-        <FloatingComposer editor={editor} style={{ width: "350px" }} />
+        <FloatingComposer
+          editor={editor}
+          className="editor-floating-composer"
+          style={{ width: "350px" }}
+        />
       </div>
     </div>
   );

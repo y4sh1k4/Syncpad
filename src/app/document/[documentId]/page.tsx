@@ -20,7 +20,7 @@ const DocumentIdPage = async ({ params }: DocumentIdPageProps) => {
 
   return (
     <Room id={documentId}>
-      <div>
+      <div className="min-h-screen bg-[#F5F5F0]">
         <Navbar preloadedDocument={preloadedDocument} />
         <Toolbar />
         <Editor />

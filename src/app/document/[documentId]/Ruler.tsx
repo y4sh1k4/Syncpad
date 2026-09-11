@@ -65,7 +65,7 @@ export const Ruler = () => {
         setRightMargin(Math.max(0, Math.min(nextRight, maxRight)));
       }
     },
-    [leftMargin, rightMargin],
+    [leftMargin, rightMargin, setLeftMargin, setRightMargin],
   );
 
   useEffect(() => {
@@ -126,7 +126,7 @@ export const Ruler = () => {
 
   return (
     <div className="relative w-full h-14 select-none">
-      <div className="absolute inset-x-0 top-6 h-px bg-neutral-300" />
+      <div className="absolute inset-x-0 top-6 h-px bg-[#D2D1C9]" />
 
       <div
         ref={rulerRef}
@@ -143,13 +143,13 @@ export const Ruler = () => {
             style={{ left: tick.left }}
           >
             {tick.label && (
-              <span className="block text-[10px] leading-none text-neutral-500 text-center">
+              <span className="block text-[10px] leading-none text-[#777773] text-center">
                 {tick.label}
               </span>
             )}
 
             <div
-              className="mx-auto w-px bg-neutral-500"
+              className="mx-auto w-px bg-[#8A8A83]"
               style={{
                 width: tick.isInteger ? "2px" : "1px",
                 height: tick.isInteger ? "12px" : tick.isHalf ? "10px" : "6px",

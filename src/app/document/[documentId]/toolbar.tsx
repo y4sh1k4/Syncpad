@@ -71,9 +71,9 @@ const ToolbarButton = ({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80",
+        "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-[#E7E6DF]",
         disabled && "cursor-not-allowed opacity-50 hover:bg-transparent",
-        isActive && "bg-red-600",
+        isActive && "bg-[#DEDDD5] text-[#3F3F3A]",
       )}
     >
       <Icon size={16} />
@@ -99,23 +99,23 @@ const FontFamilySelector = () => {
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger
-        className="bg-[#F1F4F9] h-[30px] rounded-none "
+        className="bg-[#EEEDE5] h-[30px] rounded-none "
         asChild
       >
         <Button className="py-0.5">
           {activeFont || "Select Font"}{" "}
           <ChevronDown
-            color="#c2c4c7"
+            color="#777773"
             size={16}
             className={cn("transition-transform", isOpen && "rotate-180")}
           />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white border border-[#c2c4c7] p-1 rounded-md">
+      <DropdownMenuContent className="bg-[#FFFEFC] border border-[#D8D6CC] p-1 rounded-md">
         {fonts.map((font) => (
           <DropdownMenuItem
             key={font.value}
-            className={activeFont == font.label ? "bg-[#F1F4F9]" : ""}
+            className={activeFont == font.label ? "bg-[#EEEDE5]" : ""}
             onSelect={() => {
               editor?.chain().focus().setFontFamily(font.value).run();
             }}
@@ -149,23 +149,23 @@ const FontSizeSelector = () => {
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger
-        className="bg-[#F1F4F9] h-[30px] rounded-none"
+        className="bg-[#EEEDE5] h-[30px] rounded-none"
         asChild
       >
         <Button className="py-0.5">
           {activeFontSize}
           <ChevronDown
-            color="#c2c4c7"
+            color="#777773"
             size={16}
             className={cn("transition-transform", isOpen && "rotate-180")}
           />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white border border-[#c2c4c7] p-1 rounded-md">
+      <DropdownMenuContent className="bg-[#FFFEFC] border border-[#D8D6CC] p-1 rounded-md">
         {fontSizes.map((size) => (
           <DropdownMenuItem
             key={size.label}
-            className={activeFontSize === size.value ? "bg-[#F1F4F9]" : ""}
+            className={activeFontSize === size.value ? "bg-[#EEEDE5]" : ""}
             onSelect={() => {
               if (size.value) {
                 editor?.chain().focus().setFontSize(size.value).run();
@@ -200,23 +200,23 @@ const LineHeightSelector = () => {
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger
-        className="bg-[#F1F4F9] h-[30px] rounded-none"
+        className="bg-[#EEEDE5] h-[30px] rounded-none"
         asChild
       >
-        <button className="text-sm h-7 min-w-9 flex items-center justify-center outline-none rounded-sm hover:bg-neutral-200/80">
+        <button className="text-sm h-7 min-w-9 flex items-center justify-center outline-none rounded-sm hover:bg-[#E7E6DF]">
           <ListCollapse size={16} />
           <ChevronDown
-            color="#c2c4c7"
+            color="#777773"
             size={16}
             className={cn("transition-transform", isOpen && "rotate-180")}
           />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white border border-[#c2c4c7] p-1 rounded-md">
+      <DropdownMenuContent className="bg-[#FFFEFC] border border-[#D8D6CC] p-1 rounded-md">
         {lineHeights.map((line) => (
           <DropdownMenuItem
             key={line.label}
-            className={activeLineHeight === line.value ? "bg-[#F1F4F9]" : ""}
+            className={activeLineHeight === line.value ? "bg-[#EEEDE5]" : ""}
             onSelect={() => {
               if (line.value) {
                 editor?.chain().focus().setLineHeight(line.value).run();
@@ -251,19 +251,19 @@ const HeadingSelector = () => {
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger
-        className="bg-[#F1F4F9] h-[30px] rounded-none"
+        className="bg-[#EEEDE5] h-[30px] rounded-none"
         asChild
       >
         <Button className="py-0.5">
           {activeHeading || "Select Heading"}{" "}
           <ChevronDown
-            color="#c2c4c7"
+            color="#777773"
             size={16}
             className={cn("transition-transform", isOpen && "rotate-180")}
           />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white border border-[#c2c4c7] p-1 rounded-md">
+      <DropdownMenuContent className="bg-[#FFFEFC] border border-[#D8D6CC] p-1 rounded-md">
         {headings.map((heading) => (
           <DropdownMenuItem
             key={heading.value}
@@ -271,7 +271,7 @@ const HeadingSelector = () => {
               editor?.isActive("heading", {
                 level: parseInt(heading.value) as Level,
               })
-                ? "bg-[#F1F4F9] p-4"
+                ? "bg-[#EEEDE5] p-4"
                 : "p-4"
             }
             onSelect={() => {
@@ -301,7 +301,7 @@ const TextColorSelector = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="bg-[#F1F4F9] h-[30px] rounded-none "
+        className="bg-[#EEEDE5] h-[30px] rounded-none "
         asChild
       >
         <button className="py-0.5 flex flex-col items-center justify-center">
@@ -312,7 +312,7 @@ const TextColorSelector = () => {
           ></div>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white border border-[#c2c4c7] p-1 rounded-md">
+      <DropdownMenuContent className="bg-[#FFFEFC] border border-[#D8D6CC] p-1 rounded-md">
         <SketchPicker color={value} onChange={onChange} />
       </DropdownMenuContent>
     </DropdownMenu>
@@ -327,14 +327,14 @@ const HighlightColorSelector = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="bg-[#F1F4F9] h-[30px] rounded-none "
+        className="bg-[#EEEDE5] h-[30px] rounded-none "
         asChild
       >
         <button className="py-0.5 flex flex-col items-center justify-center">
           <HighlighterIcon size={16} />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white border border-[#c2c4c7] p-1 rounded-md">
+      <DropdownMenuContent className="bg-[#FFFEFC] border border-[#D8D6CC] p-1 rounded-md">
         <SketchPicker onChange={onChange} />
       </DropdownMenuContent>
     </DropdownMenu>
@@ -407,14 +407,14 @@ const LinkButton = () => {
         <button
           onClick={handleOpenDialog}
           className={cn(
-            "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80",
-            editor?.isActive("link") && "bg-neutral-200/80",
+            "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-[#E7E6DF]",
+            editor?.isActive("link") && "bg-[#DEDDD5]",
           )}
         >
           <Link2 size={16} />
         </button>
       </DialogTrigger>
-      <DialogContent className="bg-[#F1F4F9]">
+      <DialogContent className="bg-[#FFFEFC] border-[#D8D6CC]">
         <DialogHeader>
           <DialogTitle>Add Link</DialogTitle>
           <DialogDescription>
@@ -487,19 +487,19 @@ const ImageButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="bg-[#F1F4F9] h-[30px] rounded-none "
+        className="bg-[#EEEDE5] h-[30px] rounded-none "
         asChild
       >
         <button
           className={cn(
-            "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80",
-            editor?.isActive("link") && "bg-neutral-200/80",
+            "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-[#E7E6DF]",
+            editor?.isActive("link") && "bg-[#DEDDD5]",
           )}
         >
           <ImageIcon size={16} />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white border border-[#c2c4c7] p-1 rounded-md">
+      <DropdownMenuContent className="bg-[#FFFEFC] border border-[#D8D6CC] p-1 rounded-md">
         <DropdownMenuItem onClick={() => handleUploadImage()}>
           Upload Image
         </DropdownMenuItem>
@@ -510,7 +510,7 @@ const ImageButton = () => {
       </DropdownMenuContent>
       {openDialog && (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-          <DialogContent className="bg-[#F1F4F9]">
+          <DialogContent className="bg-[#FFFEFC] border-[#D8D6CC]">
             <DialogHeader>
               <DialogTitle>Insert Image from URL</DialogTitle>
             </DialogHeader>
@@ -574,24 +574,24 @@ const AlignButton = () => {
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger
-        className="bg-[#F1F4F9] h-[30px] rounded-none "
+        className="bg-[#EEEDE5] h-[30px] rounded-none "
         asChild
       >
-        <button className="text-sm h-7 min-w-9 flex items-center justify-center rounded-sm hover:bg-neutral-200/80">
+        <button className="text-sm h-7 min-w-9 flex items-center justify-center rounded-sm hover:bg-[#E7E6DF]">
           <ActiveAlignment size={16} />
           <ChevronDown
-            color="#c2c4c7"
+            color="#777773"
             size={16}
             className={cn("transition-transform", isOpen && "rotate-180")}
           />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white border min-w-[50px] border-[#c2c4c7] p-1 rounded-md">
+      <DropdownMenuContent className="bg-[#FFFEFC] border min-w-[50px] border-[#D8D6CC] p-1 rounded-md">
         {AlignIcons.map((align) => (
           <DropdownMenuItem
             className={
               editor?.isActive({ textAlign: align.value })
-                ? "bg-[#F1F4F9] flex items-center"
+                ? "bg-[#EEEDE5] flex items-center"
                 : "flex items-center"
             }
             key={align.value}
@@ -637,24 +637,24 @@ const ListButton = () => {
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger
-        className="bg-[#F1F4F9] h-[30px] rounded-none "
+        className="bg-[#EEEDE5] h-[30px] rounded-none "
         asChild
       >
-        <button className="text-sm h-7 min-w-9 flex items-center justify-center rounded-sm hover:bg-neutral-200/80">
+        <button className="text-sm h-7 min-w-9 flex items-center justify-center rounded-sm hover:bg-[#E7E6DF]">
           <ActiveList size={16} />
           <ChevronDown
-            color="#c2c4c7"
+            color="#777773"
             size={16}
             className={cn("transition-transform", isOpen && "rotate-180")}
           />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white border min-w-[50px] border-[#c2c4c7] p-1 rounded-md">
+      <DropdownMenuContent className="bg-[#FFFEFC] border min-w-[50px] border-[#D8D6CC] p-1 rounded-md">
         {ListIcons.map((list) => (
           <DropdownMenuItem
             className={
               editor?.isActive({ list: list.value })
-                ? "bg-[#F1F4F9] flex items-center"
+                ? "bg-[#EEEDE5] flex items-center"
                 : "flex items-center"
             }
             key={list.value}
@@ -748,7 +748,7 @@ export const Toolbar = () => {
     ],
   ];
   return (
-    <div className="bg-[#F1F4F9] px-2.5 py-0.5 rounded-[24px] min-h-[40px] flex items-center gap-[15px] overflow-x-auto">
+    <div className="bg-[#EEEDE5] px-2.5 py-0.5 rounded-[24px] min-h-[40px] flex items-center gap-[15px] overflow-x-auto print:hidden">
       {sections[0].map((item) => {
         return (
           <div key={item.label} className="flex items-center gap-[15px] ">
@@ -756,20 +756,11 @@ export const Toolbar = () => {
           </div>
         );
       })}
-      <Separator
-        orientation="vertical"
-        className="h-7 w-[1px] bg-neutral-900"
-      />
+      <Separator orientation="vertical" className="h-7 w-px bg-[#B8B7AF]" />
       <HeadingSelector />
-      <Separator
-        orientation="vertical"
-        className="h-7 w-[1px] bg-neutral-900"
-      />
+      <Separator orientation="vertical" className="h-7 w-px bg-[#B8B7AF]" />
       <FontFamilySelector />
-      <Separator
-        orientation="vertical"
-        className="h-7 w-[1px] bg-neutral-900"
-      />
+      <Separator orientation="vertical" className="h-7 w-px bg-[#B8B7AF]" />
       {sections[1].map((item) => {
         return (
           <div key={item.label} className="flex items-center gap-[15px] ">
@@ -782,10 +773,7 @@ export const Toolbar = () => {
       })}
       <TextColorSelector />
       <HighlightColorSelector />
-      <Separator
-        orientation="vertical"
-        className="h-7 w-[1px] bg-neutral-900"
-      />
+      <Separator orientation="vertical" className="h-7 w-px bg-[#B8B7AF]" />
       {sections[2].map((item) => {
         return (
           <div key={item.label} className="flex items-center gap-[15px] ">
@@ -797,20 +785,11 @@ export const Toolbar = () => {
         );
       })}
 
-      <Separator
-        orientation="vertical"
-        className="h-7 w-[1px] bg-neutral-900"
-      />
+      <Separator orientation="vertical" className="h-7 w-px bg-[#B8B7AF]" />
       <FontSizeSelector />
-      <Separator
-        orientation="vertical"
-        className="h-7 w-[1px] bg-neutral-900"
-      />
+      <Separator orientation="vertical" className="h-7 w-px bg-[#B8B7AF]" />
 
-      <Separator
-        orientation="vertical"
-        className="h-7 w-[1px] bg-neutral-900"
-      />
+      <Separator orientation="vertical" className="h-7 w-px bg-[#B8B7AF]" />
       <LinkButton />
       <ImageButton />
       <AlignButton />

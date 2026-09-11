@@ -41,6 +41,8 @@ import { useEditorStore } from "@/store/useEditorStore";
 import { OrganizationSwitcher, Show, UserButton } from "@clerk/nextjs";
 import { Preloaded, useMutation, usePreloadedQuery } from "convex/react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 import {
   useInboxNotifications,
   useMarkAllInboxNotificationsAsRead,
@@ -227,13 +229,20 @@ export const Navbar = ({ preloadedDocument }: NavbarProps) => {
   };
 
   return (
-    <div className="w-full flex justify-between items-center bg-[#f8fafd] px-5 py-2 print:hidden">
+    <div className="w-full flex justify-between items-center bg-[#FAFAF7] px-6 py-2.5 print:hidden">
       <div className="flex items-center gap-2.5">
-        <div className="flex size-9 items-center justify-center rounded-md bg-blue-500 text-white shadow-sm">
-          <PenSquare size={18} />
-        </div>
+        <Link
+          href="/documents"
+          className="group flex items-baseline rounded-md text-[#22221f] outline-none focus-visible:ring-2 focus-visible:ring-[#496fe8]"
+          aria-label="Syncpad documents"
+        >
+          <span className="landing-wordmark">
+            sync<span>pad</span>
+          </span>
+          <span className="ml-1.5 inline-block size-1.5 rounded-full bg-[#496fe8] transition-transform duration-200 group-hover:scale-125" />
+        </Link>
 
-        <div className="flex flex-col gap-0.5">
+        <div className="flex flex-col gap-0.5 border-l border-[#DCDAD1] pl-3">
           <div className="flex items-center gap-5 leading-tight text-[#202124]">
             <span className="text-xl font-normal">
               {documentRecord?.title ?? "Document unavailable"}
@@ -241,18 +250,18 @@ export const Navbar = ({ preloadedDocument }: NavbarProps) => {
             <Star size={16} className="text-[#5f6368]" />
           </div>
 
-          <Menubar className="h-8 w-fit border border-[#dadce0] bg-white p-0.5 shadow-none">
+          <Menubar className="h-8 w-fit border border-[#DCDAD1] bg-[#FFFEFC] p-0.5 shadow-none">
             <MenubarMenu>
               <MenubarTrigger className="px-2 py-1 text-sm font-normal text-[#202124]">
                 File
               </MenubarTrigger>
-              <MenubarContent className="bg-white border-[#dadce0]">
+              <MenubarContent className="bg-[#FFFEFC] border-[#DCDAD1]">
                 <MenubarSub>
                   <MenubarSubTrigger>
                     <Save className="mr-2 size-4" />
                     Save
                   </MenubarSubTrigger>
-                  <MenubarSubContent className="bg-white border-[#dadce0]">
+                  <MenubarSubContent className="bg-[#FFFEFC] border-[#DCDAD1]">
                     <MenubarItem onClick={onSaveJSON}>
                       <FileJson className="mr-2 size-4" />
                       Save JSON
@@ -277,7 +286,7 @@ export const Navbar = ({ preloadedDocument }: NavbarProps) => {
                   New Document
                 </MenubarItem>
 
-                <MenubarSeparator className="my-1 bg-[#dadce0] h-px" />
+                <MenubarSeparator className="my-1 bg-[#DCDAD1] h-px" />
 
                 <MenubarItem onClick={openRenameDialog}>
                   <PenSquare className="mr-2 size-4" />
@@ -288,7 +297,7 @@ export const Navbar = ({ preloadedDocument }: NavbarProps) => {
                   Remove
                 </MenubarItem>
 
-                <MenubarSeparator className="my-1 bg-[#dadce0] h-px" />
+                <MenubarSeparator className="my-1 bg-[#DCDAD1] h-px" />
 
                 <MenubarItem onClick={() => window.print()}>
                   <Printer className="mr-2 size-4" />
@@ -301,7 +310,7 @@ export const Navbar = ({ preloadedDocument }: NavbarProps) => {
               <MenubarTrigger className="px-2 py-1 text-sm font-normal text-[#202124]">
                 Edit
               </MenubarTrigger>
-              <MenubarContent className="bg-white border-[#dadce0]">
+              <MenubarContent className="bg-[#FFFEFC] border-[#DCDAD1]">
                 <MenubarItem
                   onClick={() => editor?.chain().focus().undo().run()}
                 >
@@ -321,13 +330,13 @@ export const Navbar = ({ preloadedDocument }: NavbarProps) => {
               <MenubarTrigger className="px-2 py-1 text-sm font-normal text-[#202124]">
                 Insert
               </MenubarTrigger>
-              <MenubarContent className="bg-white border-[#dadce0]">
+              <MenubarContent className="bg-[#FFFEFC] border-[#DCDAD1]">
                 <MenubarSub>
                   <MenubarSubTrigger>
                     <Table2 className="mr-2 size-4" />
                     Table
                   </MenubarSubTrigger>
-                  <MenubarSubContent className="bg-white border-[#dadce0]">
+                  <MenubarSubContent className="bg-[#FFFEFC] border-[#DCDAD1]">
                     <MenubarItem onClick={() => insertTable(1, 1)}>
                       1 x 1
                     </MenubarItem>
@@ -349,13 +358,13 @@ export const Navbar = ({ preloadedDocument }: NavbarProps) => {
               <MenubarTrigger className="px-2 py-1 text-sm font-normal text-[#202124]">
                 Format
               </MenubarTrigger>
-              <MenubarContent className="bg-white border-[#dadce0]">
+              <MenubarContent className="bg-[#FFFEFC] border-[#DCDAD1]">
                 <MenubarSub>
                   <MenubarSubTrigger>
                     <FileText className="mr-2 size-4" />
                     Text
                   </MenubarSubTrigger>
-                  <MenubarSubContent className="bg-white border-[#dadce0]">
+                  <MenubarSubContent className="bg-[#FFFEFC] border-[#DCDAD1]">
                     <MenubarItem
                       onClick={() => editor?.chain().focus().toggleBold().run()}
                     >
@@ -414,9 +423,12 @@ export const Navbar = ({ preloadedDocument }: NavbarProps) => {
                     className="flex size-8 items-center justify-center overflow-hidden rounded-full border-2 border-white bg-blue-500 text-xs font-medium text-white"
                   >
                     {other.info?.avatar ? (
-                      <img
+                      <Image
                         src={other.info.avatar}
                         alt={other.info.name ?? "Collaborator"}
+                        width={32}
+                        height={32}
+                        unoptimized
                         className="size-full object-cover"
                       />
                     ) : (
@@ -446,8 +458,8 @@ export const Navbar = ({ preloadedDocument }: NavbarProps) => {
             </button>
 
             {notificationsOpen ? (
-              <div className="absolute right-0 top-11 z-50 w-96 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
-                <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3">
+              <div className="absolute right-0 top-11 z-50 w-96 overflow-hidden rounded-lg border border-[#DCDAD1] bg-[#FFFEFC] shadow-lg">
+                <div className="flex items-center justify-between border-b border-[#DCDAD1] px-4 py-3">
                   <h2 className="text-sm font-semibold text-gray-900">
                     Notifications
                   </h2>
@@ -484,7 +496,7 @@ export const Navbar = ({ preloadedDocument }: NavbarProps) => {
                     type="button"
                     disabled={isFetchingMore}
                     onClick={() => fetchMore()}
-                    className="w-full border-t border-gray-200 px-4 py-2 text-xs text-blue-600 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="w-full border-t border-[#DCDAD1] px-4 py-2 text-xs text-blue-600 hover:bg-[#F0F0EB] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {isFetchingMore ? "Loading…" : "Load more"}
                   </button>
@@ -497,7 +509,7 @@ export const Navbar = ({ preloadedDocument }: NavbarProps) => {
         </div>
       </Show>
       <Dialog open={renameOpen} onOpenChange={setRenameOpen}>
-        <DialogContent className="bg-white">
+        <DialogContent className="bg-[#FFFEFC] border-[#DCDAD1]">
           <DialogHeader>
             <DialogTitle>Rename document</DialogTitle>
             <DialogDescription>
@@ -533,7 +545,7 @@ export const Navbar = ({ preloadedDocument }: NavbarProps) => {
         </DialogContent>
       </Dialog>
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent className="bg-white">
+        <DialogContent className="bg-[#FFFEFC] border-[#DCDAD1]">
           <DialogHeader>
             <DialogTitle>Remove document?</DialogTitle>
             <DialogDescription>

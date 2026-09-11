@@ -4,11 +4,25 @@ import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
 import { ConvexHttpClient } from "convex/browser";
 
-const liveblocks = new Liveblocks({
-  secret: process.env.LIVEBLOCKS_SECRET_KEY!,
-});
+function getLiveblocksClient() {
+  const secret = process.env.LIVEBLOCKS_SECRET_KEY;
 
-const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+  if (!secret) {
+    throw new Error("LIVEBLOCKS_SECRET_KEY is not configured");
+  }
+
+  return new Liveblocks({ secret });
+}
+
+function getConvexClient() {
+  const deploymentUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
+
+  if (!deploymentUrl) {
+    throw new Error("NEXT_PUBLIC_CONVEX_URL is not configured");
+  }
+
+  return new ConvexHttpClient(deploymentUrl);
+}
 
 function jsonError(message: string, status: number) {
   return Response.json({ error: message }, { status });
@@ -23,9 +37,12 @@ export async function POST(req: Request) {
     return jsonError("Missing room id", 400);
   }
 
-  const document = await convex.query(api.document.listDocumentsById, {
-    documentId: roomId as Id<"documents">,
-  });
+  const document = await getConvexClient().query(
+    api.document.listDocumentsById,
+    {
+      documentId: roomId as Id<"documents">,
+    },
+  );
 
   if (!document) {
     return jsonError("Document not found", 404);
@@ -47,7 +64,7 @@ export async function POST(req: Request) {
   if (!isOwner && !isMember) {
     return jsonError("You do not have access to this document", 403);
   }
-  const session = liveblocks.prepareSession(userId, {
+  const session = getLiveblocksClient().prepareSession(userId, {
     userInfo: {
       name: user?.fullName ?? user?.primaryEmailAddress?.emailAddress ?? "User",
       avatar: user?.imageUrl ?? "",

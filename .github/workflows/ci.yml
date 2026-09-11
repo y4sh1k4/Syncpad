@@ -36,4 +36,8 @@ jobs:
         run: npm run typecheck
 
       - name: Build application
+        env:
+          # The verification build does not connect to Convex, but its client
+          # validates that a public deployment URL exists during prerendering.
+          NEXT_PUBLIC_CONVEX_URL: https://ci-placeholder.convex.cloud
         run: npm run build

@@ -118,9 +118,7 @@ body {
 
 .feature-thought-field,
 .feature-orbit,
-.feature-note-stack,
-.feature-word-field,
-.feature-share-network {
+.feature-note-stack {
   display: none;
   position: absolute;
   pointer-events: none;
@@ -1390,6 +1388,326 @@ body {
   }
 }
 
+.feature-draft-scene {
+  position: absolute;
+  right: 20px;
+  bottom: -16px;
+  width: min(270px, calc(100% - 40px));
+  height: 176px;
+  pointer-events: none;
+}
+
+.feature-draft-page-back {
+  position: absolute;
+  top: 32px;
+  left: 1px;
+  width: 176px;
+  height: 136px;
+  transform: rotate(-7deg);
+  border: 1px solid rgb(57 131 90 / 15%);
+  border-radius: 10px 10px 0 0;
+  background: rgb(248 255 248 / 72%);
+  box-shadow: 0 5px 16px rgb(42 112 67 / 6%);
+}
+
+.feature-draft-page {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  width: 220px;
+  height: 168px;
+  border: 1px solid rgb(57 131 90 / 20%);
+  border-radius: 10px 10px 0 0;
+  background: rgb(255 255 255 / 94%);
+  padding: 16px;
+  box-shadow: 0 10px 24px rgb(42 112 67 / 11%);
+  animation: feature-draft-rise 7s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.feature-draft-kicker {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #75977d;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.feature-draft-page strong {
+  display: block;
+  margin-top: 16px;
+  color: #326d49;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.feature-draft-caret {
+  display: inline-block;
+  width: 1.5px;
+  height: 15px;
+  margin-left: 3px;
+  vertical-align: -2px;
+  background: #4f9868;
+  animation: feature-draft-caret 1.1s step-end infinite;
+}
+
+.feature-draft-line {
+  display: block;
+  width: 100%;
+  height: 5px;
+  margin-top: 12px;
+  transform-origin: left;
+  border-radius: 999px;
+  background: #e2f1e1;
+}
+
+.feature-draft-line-one {
+  width: 86%;
+}
+
+.feature-draft-line-two {
+  width: 100%;
+  animation: feature-draft-write 7s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.feature-draft-line-three {
+  width: 62%;
+  animation: feature-draft-write 7s cubic-bezier(0.2, 0.8, 0.2, 1) 180ms
+    infinite;
+}
+
+.feature-draft-status {
+  position: absolute;
+  right: 13px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid #cce3ce;
+  border-radius: 999px;
+  background: #f8fff8;
+  padding: 6px 8px;
+  color: #4d815e;
+  font-size: 9px;
+  font-weight: 600;
+  box-shadow: 0 5px 14px rgb(42 112 67 / 8%);
+  animation: feature-draft-saved 7s ease-out infinite;
+}
+
+.feature-share-scene {
+  position: absolute;
+  right: 24px;
+  bottom: 20px;
+  left: 24px;
+  height: 150px;
+  pointer-events: none;
+}
+
+.feature-share-dialog {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(81 103 145 / 19%);
+  border-radius: 11px;
+  background: rgb(255 255 255 / 92%);
+  padding: 14px;
+  box-shadow: 0 10px 24px rgb(67 87 127 / 10%);
+}
+
+.feature-share-heading,
+.feature-share-invite,
+.feature-share-people {
+  display: flex;
+  align-items: center;
+}
+
+.feature-share-heading {
+  justify-content: space-between;
+}
+
+.feature-share-heading strong {
+  color: #40577f;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.feature-share-heading > span {
+  border-radius: 6px;
+  background: #edf1fb;
+  padding: 4px 6px;
+  color: #536b9b;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.feature-share-invite {
+  height: 35px;
+  margin-top: 11px;
+  border: 1px solid #dce3ef;
+  border-radius: 7px;
+  background: #fafcff;
+  padding: 0 5px 0 9px;
+}
+
+.feature-share-email {
+  overflow: hidden;
+  flex: 1;
+  color: #71809b;
+  font-size: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.feature-share-invite b {
+  border-radius: 6px;
+  background: #5f78b5;
+  padding: 6px 9px;
+  color: white;
+  font-size: 8px;
+  font-weight: 600;
+  animation: feature-share-invite 7s ease-out infinite;
+}
+
+.feature-share-people {
+  justify-content: space-between;
+  margin-top: 12px;
+  color: #71809b;
+  font-size: 8px;
+}
+
+.feature-share-avatars {
+  display: flex;
+  padding-left: 2px;
+}
+
+.feature-share-avatars i {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  margin-left: -3px;
+  border: 2px solid white;
+  border-radius: 999px;
+  background: #dd8d71;
+  color: white;
+  font-size: 6px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.feature-share-avatars i:nth-child(2) {
+  background: #7e9e8b;
+}
+
+.feature-share-avatars i:nth-child(3) {
+  background: #8e80bd;
+}
+
+.feature-share-sent {
+  position: absolute;
+  right: -7px;
+  bottom: -7px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid #d8dfeb;
+  border-radius: 999px;
+  background: #fff;
+  padding: 6px 8px;
+  color: #536b9b;
+  font-size: 8px;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgb(67 87 127 / 10%);
+  animation: feature-share-sent 7s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+@keyframes feature-draft-rise {
+  0%,
+  100% {
+    transform: translateY(4px);
+  }
+
+  12%,
+  88% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes feature-draft-caret {
+  0%,
+  48% {
+    opacity: 1;
+  }
+
+  49%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes feature-draft-write {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scaleX(0.2);
+  }
+
+  16%,
+  88% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes feature-draft-saved {
+  0%,
+  11%,
+  100% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  19%,
+  88% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes feature-share-invite {
+  0%,
+  100% {
+    background: #5f78b5;
+    transform: scale(1);
+  }
+
+  12% {
+    background: #496fe8;
+    transform: scale(0.96);
+  }
+
+  19%,
+  88% {
+    background: #5f78b5;
+    transform: scale(1);
+  }
+}
+
+@keyframes feature-share-sent {
+  0%,
+  13%,
+  100% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.96);
+  }
+
+  21%,
+  88% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .feature-comment,
 .feature-document,
 .feature-notification,
@@ -2098,7 +2416,13 @@ body {
   .feature-share-page,
   .feature-share-ray,
   .feature-share-core,
-  .feature-share-node {
+  .feature-share-node,
+  .feature-draft-page,
+  .feature-draft-caret,
+  .feature-draft-line,
+  .feature-draft-status,
+  .feature-share-invite b,
+  .feature-share-sent {
     animation: none;
   }
 

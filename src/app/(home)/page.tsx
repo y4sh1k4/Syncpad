@@ -346,25 +346,23 @@ function FeatureBento() {
                 useful version between.
               </p>
             </div>
-            <div className="feature-bento-legacy feature-pages absolute bottom-0 right-9 flex items-end -space-x-12">
-              <div className="h-[138px] w-[150px] rotate-[-7deg] rounded-t-lg border border-[#c5dfc6] bg-[#f8fff8] shadow-[0_-3px_12px_rgba(54,112,67,0.1)]" />
-              <div className="h-[180px] w-[190px] rotate-[2deg] rounded-t-lg border border-[#bddabe] bg-white px-5 py-6 shadow-[0_-5px_18px_rgba(54,112,67,0.15)]">
-                <span className="block h-2 w-24 rounded bg-[#d3edcf]" />
-                <span className="mt-3 block h-1.5 w-full rounded bg-[#e5f3e4]" />
-                <span className="mt-2 block h-1.5 w-4/5 rounded bg-[#e5f3e4]" />
-                <span className="mt-5 block h-2 w-16 rounded bg-[#d3edcf]" />
-                <span className="mt-3 block h-1.5 w-full rounded bg-[#e5f3e4]" />
+            <div className="feature-draft-scene" aria-hidden="true">
+              <span className="feature-draft-page-back" />
+              <div className="feature-draft-page">
+                <span className="feature-draft-kicker">
+                  <FilePlus2 size={11} /> Untitled draft
+                </span>
+                <strong>
+                  Start here
+                  <span className="feature-draft-caret" />
+                </strong>
+                <i className="feature-draft-line feature-draft-line-one" />
+                <i className="feature-draft-line feature-draft-line-two" />
+                <i className="feature-draft-line feature-draft-line-three" />
               </div>
-            </div>
-            <div className="feature-word-field" aria-hidden="true">
-              <span className="feature-word-page feature-word-page-one" />
-              <span className="feature-word-page feature-word-page-two" />
-              <span className="feature-word-page feature-word-page-three" />
-              <span className="feature-word feature-word-one">begin</span>
-              <span className="feature-word feature-word-two">shape</span>
-              <span className="feature-word feature-word-three">make</span>
-              <span className="feature-word-stroke feature-word-stroke-one" />
-              <span className="feature-word-stroke feature-word-stroke-two" />
+              <span className="feature-draft-status">
+                <Check size={10} /> Saved as you write
+              </span>
             </div>
           </article>
 
@@ -378,43 +376,27 @@ function FeatureBento() {
                 moving.
               </p>
             </div>
-            <div className="feature-bento-legacy feature-sharing absolute bottom-6 left-7 right-7 rounded-lg border border-[#d8dfeb] bg-white/90 p-3 shadow-[0_6px_18px_rgba(67,88,131,0.1)]">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-semibold text-[#40577f]">
-                  Share “Launch brief”
-                </span>
-                <span className="rounded bg-[#edf1fb] px-1.5 py-1 text-[8px] font-medium text-[#536b9b]">
-                  Can edit
-                </span>
+            <div className="feature-share-scene" aria-hidden="true">
+              <div className="feature-share-dialog">
+                <div className="feature-share-heading">
+                  <strong>Share “Launch brief”</strong>
+                  <span>Can edit</span>
+                </div>
+                <div className="feature-share-invite">
+                  <span className="feature-share-email">maya@northstar.co</span>
+                  <b>Invite</b>
+                </div>
+                <div className="feature-share-people">
+                  <span className="feature-share-avatars">
+                    <i>MA</i>
+                    <i>JR</i>
+                    <i>SL</i>
+                  </span>
+                  <span>3 people have access</span>
+                </div>
               </div>
-              <div className="feature-invite mt-3 flex items-center gap-2 rounded-md border border-[#dce3ef] bg-[#fafcff] px-2.5 py-2">
-                <span className="size-2 rounded-full bg-[#6e8ad0]" />
-                <span className="text-[9px] text-[#71809b]">
-                  maya@northstar.co
-                </span>
-                <span className="ml-auto text-[9px] font-medium text-[#496fe8]">
-                  Invite
-                </span>
-              </div>
-            </div>
-            <div className="feature-share-network" aria-hidden="true">
-              <span className="feature-share-page">
-                <i />
-                <i />
-                <i />
-              </span>
-              <span className="feature-share-ray feature-share-ray-one" />
-              <span className="feature-share-ray feature-share-ray-two" />
-              <span className="feature-share-ray feature-share-ray-three" />
-              <span className="feature-share-core">✦</span>
-              <span className="feature-share-node feature-share-node-one">
-                MA
-              </span>
-              <span className="feature-share-node feature-share-node-two">
-                JR
-              </span>
-              <span className="feature-share-node feature-share-node-three">
-                SL
+              <span className="feature-share-sent">
+                <Check size={10} /> Invite sent
               </span>
             </div>
           </article>
